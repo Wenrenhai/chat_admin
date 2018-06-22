@@ -27,7 +27,7 @@ class Common{
 	}
 
     public static function create_user_token($user){
-        $token = md5(time().$user->credentials.$user->login_uuid);
+        $token = md5(time().$user->account);
         if($user->update(['token'=>$token])){
             return $token;
         }else{
