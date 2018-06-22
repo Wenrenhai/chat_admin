@@ -27,6 +27,7 @@ class Common{
 	}
 
     public static function create_user_token($user){
+        // dd($user->)
         $token = md5(time().$user['account']);
         if($user->update(['token'=>$token])){
             return $token;

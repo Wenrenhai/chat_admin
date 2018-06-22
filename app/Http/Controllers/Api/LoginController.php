@@ -22,12 +22,12 @@ class LoginController extends Controller
             ]);
         }
 
-        $users = User::where('password', $request -> password)->get()->toArray();
-        // dd($users);
+        $users = User::where('password', $request -> password)->get();
         $bool = false;
         $login_user = null;
         foreach($users as $user){
-            if(in_array($request -> account, $user)){
+            $v = $user -> toArray();
+            if(in_array($request -> credentials, $v)){
                 $login_user = $user;
                 $bool = true;
             }
