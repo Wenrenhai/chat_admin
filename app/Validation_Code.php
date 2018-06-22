@@ -15,7 +15,7 @@ class Validation_Code extends Model
             return response() -> json([
                 'status' => false,
                 'message' => '请传递客户端标识'
-            ], 200);
+            ], 400);
         }else{
             $uuid = $request -> uuid;
         }
@@ -23,7 +23,7 @@ class Validation_Code extends Model
             return response() -> json([
                 'status' => false,
                 'message' => '请传验证码'
-            ], 200);
+            ], 400);
         }
         $bool = false;
         if(self::where(['uuid' => $uuid]) -> count()){
@@ -50,7 +50,7 @@ class Validation_Code extends Model
             return response()->json([
                 'status'=>false,
                 'message'=>'发送失败'
-            ], 200);
+            ], 400);
         }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\MyClass\Common;
 class LoginController extends Controller
 {
     public function login(Request $request){
@@ -24,18 +25,31 @@ class LoginController extends Controller
         $users = User::where('password', $request -> password)->get()->toArray();
         // dd($users);
         $bool = false;
-
+        $login_user = null;
         foreach($users as $user){
             if(in_array($request -> account, $user)){
-                $bool=true;
+                $login_user = $user;
+                $bool = true;
             }
         }
 
         if($bool){
-            return response() -> json([
-                'status' => true,
-                'message' => 'ojbk'
-            ], 200);
+            $token = Common::create_user_token($login_user);
+            if($token){
+                return response() -> json([
+                    'status' => true,
+                    'data' => [
+                        'token' => $token
+                    ],
+                    'message' => 'ojbk'
+                ], 200);
+
+            }else{
+                return response() -> json([
+                    'status' => false,
+                    'message' => '登录失败'
+                ],400);
+            }
         }else{
             return response() -> json([
                 'status' => false,

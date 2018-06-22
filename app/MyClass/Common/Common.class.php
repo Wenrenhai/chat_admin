@@ -26,9 +26,14 @@ class Common{
 		return $account;
 	}
 
-    public static function create_user_token(){
-        $time = time();
-        $account = User::where('id',$id)->first()['id'];
+    public static function create_user_token($user){
+        $token = md5(time().$user->credentials.$user->login_uuid);
+        if($user->update(['token'=>$token])){
+            return $token;
+        }else{
+            return false;
+        }
 
     }
+
 }

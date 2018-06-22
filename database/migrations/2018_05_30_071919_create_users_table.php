@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->comment('密码');
             $table->string('token')->nullable()->comment('验证一下啊');
             $table->integer('state')->default(0)->comment('0未激活,1禁止登陆,2在线,3下线');
+            $table->string('login_uuid')->nullable()->comment('登录此账号的设备标识');
             $table->string('client_id')->nullable()->comment('当前登陆的客户端id');
             $table->timestamps();
         });
